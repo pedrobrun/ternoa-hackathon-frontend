@@ -1,0 +1,61 @@
+{
+  "root": true,
+  "extends": [
+    "next/core-web-vitals",
+    "airbnb-base",
+    "airbnb-typescript/base",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:jsx-a11y/recommended"
+  ],
+  "plugins": ["import"],
+  "ignorePatterns": "*.spec.tsx",
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+
+      "parserOptions": {
+        "project": "./tsconfig.json",
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+      },
+
+      "settings": {
+        "import/parsers": {
+          "@typescript-eslint/parser": [".ts", ".tsx"]
+        },
+        "import/resolver": {
+          "typescript": {
+            "alwaysTryTypes": true,
+            "project": "./tsconfig.json"
+          }
+        }
+      },
+      "rules": {
+        "react/display-name": "off",
+        "global-require": "off",
+        "import/no-cycle": "off",
+        "no-async-promise-executor": "off",
+        "no-restricted-exports": "off",
+        "semi": "off",
+        "@typescript-eslint/semi": ["error", "never"],
+        "typescript-eslint/no-unsafe-assignment": "off",
+        "no-use-before-define": "off",
+        "consistent-return": "off",
+        "max-len": ["off"],
+        "prefer-arrow-callback": "error",
+        "import/prefer-default-export": "off",
+        "import/order": [
+          "error",
+          {
+            "groups": ["builtin", "external", "internal"],
+            "newlines-between": "always",
+            "alphabetize": {
+              "order": "asc",
+              "caseInsensitive": true
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

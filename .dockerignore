@@ -1,0 +1,8 @@
+Dockerfile
+.dockerignore
+README.md
+.next
+.env
+.git
+*.spec.tsx
+node_modules

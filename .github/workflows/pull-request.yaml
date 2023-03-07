@@ -1,0 +1,32 @@
+name: 'Pull request'
+
+on:
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+      - '.prettierrc.json'
+      - '.gitattributes'
+      - '.editorconfig'
+      - '.gitignore'
+      - '.dockerignore'
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint-test:
+    name: Lint and Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
+        with:
+          version: ^7.25.0
+      - name: Install dependencies
+        run: pnpm install
+      - name: Lint
+        run: pnpm run lint
+      - name: Test
+        run: pnpm run test
