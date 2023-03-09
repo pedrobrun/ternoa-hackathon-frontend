@@ -39,6 +39,7 @@
         "semi": "off",
         "@typescript-eslint/semi": ["error", "never"],
         "typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-explicit-any": "off",
         "no-use-before-define": "off",
         "consistent-return": "off",
         "max-len": ["off"],
