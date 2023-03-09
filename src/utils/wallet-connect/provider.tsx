@@ -8,7 +8,7 @@ import { getKeyringFromSeed, initializeApi } from 'ternoa-js'
 import ConnectWalletModal from '@/components/connectWalletModal'
 
 const chainId = process.env['NEXT_PUBLIC_CHAIN_ID'] ?? 'ternoa:18bcdb75a0bba577b084878db2dc2546'
-const relayUrl = process.env['NEXT_PUBLIC_RELAY_URL'] ?? 'wss://alphanet.ternoa.com'
+const relayUrl = process.env['NEXT_PUBLIC_RELAY_URL'] ?? 'wss://wallet-connectrelay.ternoa.network'
 const projectId = process.env['PROJECT_ID'] ?? 'a982a87b2c64a9c35d08a036abfbfc7e'
 const name = process.env['NEXT_PUBLIC_PROJECT_NAME'] ?? 'Ternoa Hackathon - Claim your NFT daily'
 const description =
