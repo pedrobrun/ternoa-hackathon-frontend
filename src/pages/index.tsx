@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useState } from 'react'
 import { transferNft, WaitUntil, createNft } from 'ternoa-js'
 
 import { useWalletConnectClient } from '@/utils/wallet-connect/provider'
@@ -7,52 +8,44 @@ export default function Home() {
   const { connect, disconnect, account, client, session, keyring, isInitializing } =
     useWalletConnectClient()
 
+  const [loadingClaim, setLoadingClaim] = useState(false)
+
   const mintNft = async () => {
-    if (keyring) {
-      try {
-        const nftData = await createNft(
-          'Ternoa Hackathon claimed NFT',
-          0,
-          undefined,
-          false,
-          keyring as any,
-          WaitUntil.BlockInclusion,
-        )
-        console.log('The on-chain NFT id is: ', nftData.nftId)
-        return nftData.nftId
-      } catch (e) {
-        console.error(e)
-      }
-    }
-    return null
+    const nftData = await createNft(
+      'Ternoa Hackathon claimed NFT',
+      0,
+      undefined,
+      false,
+      keyring as any,
+      WaitUntil.BlockInclusion,
+    )
+    console.log('The on-chain NFT id is: ', nftData.nftId)
+    return nftData.nftId
   }
 
   const sendNft = async (nftId: number, recipientAddress: string) => {
-    if (keyring) {
-      try {
-        const nftData = await transferNft(
-          nftId,
-          recipientAddress,
-          keyring as any,
-          WaitUntil.BlockInclusion,
-        )
-        console.log(`NFT ${nftData.nftId} transferred`)
-      } catch (e) {
-        console.error(e)
-      }
-    }
-    return null
+    const nftData = await transferNft(
+      nftId,
+      recipientAddress,
+      keyring as any,
+      WaitUntil.BlockInclusion,
+    )
+    console.log(`NFT ${nftData.nftId} transferred`)
   }
 
   const claimNft = async () => {
-    if (session && account && client) {
-      console.log('will mint')
-      const mintedNftId = await mintNft()
-      console.log('minted', mintedNftId)
-      if (mintedNftId) {
-        const transferedNft = await sendNft(mintedNftId, account)
-        console.log('transferednft', transferNft)
+    try {
+      setLoadingClaim(true)
+      if (session && account && client && keyring) {
+        const mintedNftId = await mintNft()
+        if (mintedNftId) {
+          await sendNft(mintedNftId, account)
+        }
       }
+    } catch (e) {
+      console.log(e)
+    } finally {
+      setLoadingClaim(false)
     }
   }
 
@@ -77,9 +70,10 @@ export default function Home() {
               <div className="flex flex-col w-full justify-center items-center">
                 <button
                   onClick={claimNft}
+                  disabled={loadingClaim}
                   className="w-[299px] xl:w-[470px] mt-[44px] h-[54px] bg-gradient-to-r rounded-[12px] via-[#CB06ED] via-[#FF0062] from-[#004FFF] to-[#FF8500] text-[16px] font-bold"
                 >
-                  Claim NFT 🎁
+                  {loadingClaim ? 'Loading...' : 'Claim NFT 🎁'}
                 </button>
                 <button
                   className="mt-[59px] border-2 border-[#7898F1] rounded-[12px] px-[30px] py-[15px] font-bold text-[16px]"
