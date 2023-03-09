@@ -75,10 +75,10 @@ export default function Home() {
               <div className="flex flex-col w-full justify-center items-center">
                 <button
                   onClick={claimNft}
-                  disabled={loadingClaim}
+                  disabled={loadingClaim || Boolean(claimedNft)}
                   className="w-[299px] xl:w-[470px] mt-[44px] h-[54px] bg-gradient-to-r rounded-[12px] via-[#CB06ED] via-[#FF0062] from-[#004FFF] to-[#FF8500] text-[16px] font-bold"
                 >
-                  {loadingClaim ? 'Loading...' : 'Claim NFT 🎁'}
+                  {loadingClaim ? 'Loading...' : claimedNft ? 'NFT claimed 🥳' : 'Claim NFT 🎁'}
                 </button>
                 {claimedNft ? <div className="my-4">Claimed NFT: {claimedNft}</div> : null}
                 <button

@@ -36,6 +36,7 @@
         "import/no-cycle": "off",
         "no-async-promise-executor": "off",
         "no-console": "off",
+        "no-nested-ternary": "off",
         "object-curly-newline": "off",
         "operator-linebreak": "off",
         "no-restricted-exports": "off",
