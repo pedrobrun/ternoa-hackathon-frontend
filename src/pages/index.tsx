@@ -68,7 +68,7 @@ export default function Home() {
           <div className="flex mt-[80px] font-bold flex-col justify-center items-center xl:px-[163px] rounded-[20px] xl:pt-[75px] xl:pb-[97px] px-[31px] pb-[43px] pt-[60px] bg-opacity-40 bg-black mx-[16px]">
             <div className="max-w-[300px] text-center flex flex-col">
               <div className="text-[32px]">Claim your</div>
-              <div className="text-[40px] -mt-5">NFTs daily!</div>
+              <div className="text-[40px] -mt-5">NFT daily!</div>
             </div>
 
             {client && account ? (
