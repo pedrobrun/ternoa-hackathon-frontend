@@ -9,6 +9,7 @@ export default function Home() {
     useWalletConnectClient()
 
   const [loadingClaim, setLoadingClaim] = useState(false)
+  const [claimedNft, setClaimedNft] = useState<number>()
 
   const mintNft = async () => {
     const nftData = await createNft(
@@ -31,6 +32,7 @@ export default function Home() {
       WaitUntil.BlockInclusion,
     )
     console.log(`NFT ${nftData.nftId} transferred`)
+    return nftData.nftId
   }
 
   const claimNft = async () => {
@@ -39,7 +41,10 @@ export default function Home() {
       if (session && account && client && keyring) {
         const mintedNftId = await mintNft()
         if (mintedNftId) {
-          await sendNft(mintedNftId, account)
+          const sentNft = await sendNft(mintedNftId, account)
+          if (sentNft) {
+            setClaimedNft(sentNft)
+          }
         }
       }
     } catch (e) {
@@ -75,6 +80,7 @@ export default function Home() {
                 >
                   {loadingClaim ? 'Loading...' : 'Claim NFT 🎁'}
                 </button>
+                {claimedNft ? <div className="my-4">Claimed NFT: {claimedNft}</div> : null}
                 <button
                   className="mt-[59px] border-2 border-[#7898F1] rounded-[12px] px-[30px] py-[15px] font-bold text-[16px]"
                   onClick={() => disconnect()}
